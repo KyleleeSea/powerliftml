@@ -70,11 +70,11 @@ def predict():
     if (type(prediction) != str):  # Only set bounds if 'First' is not predicted
         if (prediction < 4):     # Set lower bound to 1st if subtracting 3 would lead to a negative
             lower = 1
-            upper = prediction + 3
+            upper = round(prediction + 3, 1)
             prediction = "Between " + str(lower) + " and " + str(upper)
         else:  # Set bounds of 3 distance
             lower = round(prediction - 3, 1)
-            upper = prediction + 3
+            upper = round(prediction + 3, 1)
             prediction = "Between " + str(lower) + " and " + str(upper)
 
     return render_template('index.html', prediction=prediction)
