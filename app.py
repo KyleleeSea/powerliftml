@@ -73,7 +73,7 @@ def predict():
             upper = prediction + 3
             prediction = "Between " + str(lower) + " and " + str(upper)
         else:  # Set bounds of 3 distance
-            lower = prediction - 3
+            lower = round(prediction - 3, 1)
             upper = prediction + 3
             prediction = "Between " + str(lower) + " and " + str(upper)
 
