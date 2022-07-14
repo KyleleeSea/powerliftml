@@ -52,6 +52,72 @@
         learning. Placings are given with decimals to represent confidence of prediction. Ranges returned for accuracy.
 
     </p>
+    {% if prediction %}
+    <div class="PredictForm">
+        <form action="{{url_for('predict')}}" method="post">
+            <div class="form-group">
+                <label for="measurement">Units</label>
+                <select class="form-control" id="measurement" name="Units" required>
+                    <option value="lbs" {% if request.form['Units']=='lbs' %} selected {% endif %}>lbs</option>
+                    <option value="kgs" {% if request.form['Units']=='kgs' %} selected {% endif %}>kgs</option>
+                </select>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select class="form-control" id="gender" name="Gender" required>
+                            <option value="M" {% if request.form['Gender']=='M' %} selected {% endif %}>Male</option>
+                            <option value="F" {% if request.form['Gender']=='F' %} selected {% endif %}>Female</option>
+                            <option value="O" {% if request.form['Gender']=='O' %} selected {% endif %}>Other</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="weight">Bodyweight</label>
+                        <input class="form-control" type="number" name="Weight" id="weight" placeholder="Your weight"
+                            required value="{{request.form['Weight']}}">
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="squat">Squat Max</label>
+                <input class="form-control" type="number" name="Squat" id="squat" placeholder="Enter your squat max"
+                    required value="{{request.form['Squat']}}">
+            </div>
+
+            <div class="form-group">
+                <label for="bench">Benchpress Max</label>
+                <input class="form-control" type="number" name="Benchpress" id="bench"
+                    placeholder="Enter your benchpress max" required value="{{request.form['Benchpress']}}">
+            </div>
+
+            <div class="form-group">
+                <label for="deadlift">Deadlift Max</label>
+                <input class="form-control" type="number" name="Deadlift" id="deadlift"
+                    placeholder="Enter your deadlift max" required value="{{request.form['Deadlift']}}">
+            </div>
+
+            <p class="PlacingHeader">Your Predicted Placing:</p>
+            {% if prediction == 'First' %}
+            <p class="First">{{prediction}}</p>
+            {% else %}
+            <p class="Placing">{{prediction}}</p>
+            {% endif %}
+
+
+            <button type="submit" class="btn btn-outline-dark">Predict</button>
+            <br>
+            <a href="/documentation" class="PredictionHyperlink">How Prediction Works</a>
+        </form>
+    </div>
+    {% else %}
+    <!-- Form without data from previous entry populated due to it being the first entry -->
     <div class="PredictForm">
         <form action="{{url_for('predict')}}" method="post">
             <div class="form-group">
@@ -102,22 +168,12 @@
                     placeholder="Enter your deadlift max" required>
             </div>
 
-            {% if prediction %}
-            <p class="PlacingHeader">Your Predicted Placing:</p>
-            {% if prediction == 'First' %}
-            <p class="First">{{prediction}}</p>
-            {% endif %}
-            {% if prediction != 'First' %}
-            <p class="Placing">{{prediction}}</p>
-            {% endif %}
-            {% endif %}
-
-
             <button type="submit" class="btn btn-outline-dark">Predict</button>
             <br>
             <a href="/documentation" class="PredictionHyperlink">How Prediction Works</a>
         </form>
     </div>
+    {% endif %}
 </body>
 
 </html>
